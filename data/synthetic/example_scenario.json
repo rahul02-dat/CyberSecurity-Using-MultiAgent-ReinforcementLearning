@@ -1,0 +1,31 @@
+{
+  "name": "example_attack_scenario",
+  "description": "Simple attack sequence for testing",
+  "episode_length": 100,
+  "attack_sequence": [
+    {
+      "step_range": [0, 20],
+      "attack_type": "none"
+    },
+    {
+      "step_range": [20, 35],
+      "attack_type": "scan"
+    },
+    {
+      "step_range": [35, 50],
+      "attack_type": "none"
+    },
+    {
+      "step_range": [50, 70],
+      "attack_type": "ddos"
+    },
+    {
+      "step_range": [70, 85],
+      "attack_type": "bruteforce"
+    },
+    {
+      "step_range": [85, 100],
+      "attack_type": "none"
+    }
+  ]
+}
