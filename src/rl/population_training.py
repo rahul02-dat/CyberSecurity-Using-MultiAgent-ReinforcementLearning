@@ -77,7 +77,6 @@ class AdversarialMultiAgentEnv(MultiAgentEnv):
         self.current_attacker_action = "none"
         self.attack_active = False
         
-        # obs is a dict where each agent key maps to the same state
         base_state = obs.get("detection", obs.get("attacker", np.array([0, 0, 0, 0]))).astype(np.float32)
         
         attacker_obs = np.array([
@@ -138,7 +137,6 @@ class AdversarialMultiAgentEnv(MultiAgentEnv):
         
         obs, rewards, dones, infos = self.env.step(actions)
         
-        # obs is a dict where each agent key maps to the same state
         base_state = obs.get("detection", obs.get("attacker", np.array([0, 0, 0, 0]))).astype(np.float32)
         
         attacker_obs = np.array([
@@ -220,7 +218,7 @@ class AdversarialMultiAgentEnv(MultiAgentEnv):
         return reward
 
 
-def train_adversarial_marl():
+def train_adversarial_marl(pretrained_checkpoint: str = None):
     with open("configs/adversarial_training.yaml", 'r') as f:
         config = yaml.safe_load(f)
     
@@ -253,8 +251,8 @@ def train_adversarial_marl():
             }
         )
         .framework("torch")
-        .env_runners(
-            num_cpus_per_env_runner=1,
+        .resources(
+            num_cpus_per_worker=1,
         )
         .multi_agent(
             policies={
@@ -334,6 +332,29 @@ def train_adversarial_marl():
         
         if trainer is None:
             trainer = attacker_train_config.build()
+            
+            if pretrained_checkpoint:
+                print(f"\n  Loading pre-trained defenders from: {pretrained_checkpoint}")
+                try:
+                    state = trainer.__getstate__()
+                    
+                    import pickle
+                    checkpoint_file = os.path.join(pretrained_checkpoint, "algorithm_state.pkl")
+                    if os.path.exists(checkpoint_file):
+                        with open(checkpoint_file, 'rb') as f:
+                            saved_state = pickle.load(f)
+                        
+                        for policy_id in ["detection_policy", "response_policy"]:
+                            if policy_id in saved_state.get("worker", {}).get("state", {}):
+                                trainer.get_policy(policy_id).set_state(
+                                    saved_state["worker"]["state"][policy_id]
+                                )
+                        print("  ✓ Defenders loaded successfully")
+                    else:
+                        print("  ⚠ Checkpoint file not found, starting from scratch")
+                except Exception as e:
+                    print(f"  ⚠ Could not load checkpoint: {e}")
+                    print("  Starting adversarial training from scratch...")
         else:
             for policy_id in ["detection_policy", "response_policy"]:
                 trainer.get_policy(policy_id).config["lr"] = 0.0
@@ -405,4 +426,22 @@ def train_adversarial_marl():
 
 
 if __name__ == "__main__":
-    train_adversarial_marl()                
+    import glob
+    
+    checkpoint_pattern = os.path.abspath("results/phase2_training/marl_cybersecurity_phase2/*/checkpoint_*")
+    checkpoints = sorted(glob.glob(checkpoint_pattern))
+    
+    if checkpoints:
+        latest_checkpoint = checkpoints[-1]
+        print(f"\nFound Phase 2 checkpoint: {latest_checkpoint}")
+        print("Loading pre-trained defenders for adversarial training...\n")
+        train_adversarial_marl(pretrained_checkpoint=latest_checkpoint)
+    else:
+        print("\n" + "="*80)
+        print("WARNING: No Phase 2 checkpoint found!")
+        print("="*80)
+        print("Please run Phase 2 training first:")
+        print("  python src/rl/trainer_rllib.py")
+        print("\nOr specify checkpoint path manually:")
+        print("  train_adversarial_marl(pretrained_checkpoint='path/to/checkpoint')")
+        print("="*80)
