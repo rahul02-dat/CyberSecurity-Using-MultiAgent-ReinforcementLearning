@@ -251,8 +251,8 @@ def train_adversarial_marl(pretrained_checkpoint: str = None):
             }
         )
         .framework("torch")
-        .resources(
-            num_cpus_per_worker=1,
+        .env_runners(
+            num_cpus_per_env_runner=1,
         )
         .multi_agent(
             policies={
@@ -331,7 +331,7 @@ def train_adversarial_marl(pretrained_checkpoint: str = None):
         )
         
         if trainer is None:
-            trainer = attacker_train_config.build()
+            trainer = attacker_train_config.build_algo()
             
             if pretrained_checkpoint:
                 print(f"\n  Loading pre-trained defenders from: {pretrained_checkpoint}")
