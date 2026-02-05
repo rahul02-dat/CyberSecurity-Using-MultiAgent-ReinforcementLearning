@@ -2,6 +2,8 @@ import yaml
 import sys
 from pathlib import Path
 from typing import Dict, Any
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from main import initialize_agents, initialize_evaluators, initialize_adaptations
 from environment.network_env import NetworkEnvironment
