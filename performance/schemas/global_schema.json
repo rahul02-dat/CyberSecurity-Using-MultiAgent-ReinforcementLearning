@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "agent_type": "global",
+  "metrics": {
+    "system_security_score": {
+      "type": "float",
+      "description": "Overall system security score",
+      "range": [0, 1]
+    },
+    "infection_level": {
+      "type": "float",
+      "description": "Current infection level",
+      "range": [0, 1]
+    },
+    "total_damage": {
+      "type": "float",
+      "description": "Total accumulated damage"
+    },
+    "total_cost": {
+      "type": "float",
+      "description": "Total operational cost"
+    },
+    "coordination_efficiency": {
+      "type": "float",
+      "description": "Efficiency of multi-agent coordination",
+      "range": [0, 1]
+    }
+  }
+}

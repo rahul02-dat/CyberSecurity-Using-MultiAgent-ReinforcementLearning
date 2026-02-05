@@ -1,0 +1,39 @@
+experiment:
+  name: "adaptive_attack"
+  description: "Training with adaptive attack patterns"
+  seed: 123
+
+environment:
+  feature_dim: 50
+  max_steps: 1000
+
+agents:
+  monitoring:
+    learning_rate: 0.0005
+    num_features_to_select: 25
+    hidden_dim: 256
+  
+  detection:
+    learning_rate: 0.0004
+    hidden_dim: 256
+    use_ollama: true
+    confidence_threshold: 0.6
+  
+  response:
+    learning_rate: 0.0004
+    hidden_dim: 256
+    temperature: 1.2
+  
+  policy_adaptation:
+    learning_rate: 0.0002
+    hidden_dim: 256
+
+training:
+  num_episodes: 2000
+  batch_size: 128
+  update_frequency: 5
+  checkpoint_frequency: 200
+
+evaluation:
+  eval_episodes: 100
+  eval_frequency: 200

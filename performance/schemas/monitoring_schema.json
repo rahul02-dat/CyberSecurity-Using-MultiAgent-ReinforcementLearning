@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "agent_type": "monitoring",
+  "metrics": {
+    "avg_reward": {
+      "type": "float",
+      "description": "Average reward per episode",
+      "range": [-10, 10]
+    },
+    "total_reward": {
+      "type": "float",
+      "description": "Total reward accumulated",
+      "range": [-1000, 1000]
+    },
+    "avg_features_selected": {
+      "type": "float",
+      "description": "Average number of features selected",
+      "range": [0, 50]
+    },
+    "avg_information_gain": {
+      "type": "float",
+      "description": "Average information gain from selected features",
+      "range": [0, 1]
+    },
+    "reward_std": {
+      "type": "float",
+      "description": "Standard deviation of rewards",
+      "range": [0, 100]
+    }
+  },
+  "aggregated_metrics": {
+    "mean_avg_reward": {
+      "type": "float",
+      "description": "Mean of average rewards over multiple episodes"
+    },
+    "mean_total_reward": {
+      "type": "float",
+      "description": "Mean of total rewards over multiple episodes"
+    },
+    "mean_features_selected": {
+      "type": "float",
+      "description": "Mean number of features selected"
+    },
+    "mean_information_gain": {
+      "type": "float",
+      "description": "Mean information gain"
+    },
+    "reward_stability": {
+      "type": "float",
+      "description": "Stability of rewards (lower is better)"
+    }
+  }
+}

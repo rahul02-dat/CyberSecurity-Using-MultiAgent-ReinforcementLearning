@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "agent_type": "response",
+  "metrics": {
+    "avg_reward": {
+      "type": "float",
+      "description": "Average reward per episode"
+    },
+    "total_damage_prevented": {
+      "type": "float",
+      "description": "Total damage prevented by responses"
+    },
+    "total_cost_incurred": {
+      "type": "float",
+      "description": "Total cost of mitigation actions"
+    },
+    "efficiency_ratio": {
+      "type": "float",
+      "description": "Ratio of damage prevented to cost incurred"
+    },
+    "action_diversity": {
+      "type": "float",
+      "description": "Entropy of action distribution"
+    }
+  }
+}

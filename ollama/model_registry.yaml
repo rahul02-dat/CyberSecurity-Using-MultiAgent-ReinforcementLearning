@@ -1,0 +1,50 @@
+models:
+  llama2:
+    name: llama2:7b
+    description: Meta's Llama 2 language model
+    context_length: 4096
+    use_cases:
+      - general_purpose
+      - attack_classification
+    
+  mistral:
+    name: mistral:7b
+    description: Mistral AI's efficient language model
+    context_length: 8192
+    use_cases:
+      - fast_inference
+      - attack_analysis
+    
+  codellama:
+    name: codellama
+    description: Code-focused variant of Llama 2
+    context_length: 4096
+    use_cases:
+      - code_analysis
+      - vulnerability_detection
+
+detection_prompts:
+  attack_classification: |
+    Analyze this network traffic pattern:
+    
+    Features: {features}
+    
+    Classify as one of: Normal(0), DDoS(1), Injection(2), Malware(3), Probe(4)
+    
+    Respond with JSON: {{"class": <number>, "reasoning": "<brief explanation>"}}
+  
+  anomaly_detection: |
+    Examine these network metrics:
+    
+    {metrics}
+    
+    Determine if this represents anomalous behavior. Respond with JSON:
+    {{"is_anomaly": <true/false>, "confidence": <0-1>, "reasoning": "<explanation>"}}
+  
+  threat_analysis: |
+    Given the following attack indicators:
+    
+    {indicators}
+    
+    Provide a threat assessment with JSON:
+    {{"threat_level": "<low/medium/high/critical>", "recommended_actions": ["<action1>", "<action2>"]}}

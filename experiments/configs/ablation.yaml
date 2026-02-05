@@ -1,0 +1,40 @@
+experiment:
+  name: "ablation"
+  description: "Ablation study - testing without policy adaptation"
+  seed: 456
+
+environment:
+  feature_dim: 50
+  max_steps: 1000
+
+agents:
+  monitoring:
+    learning_rate: 0.0003
+    num_features_to_select: 20
+    hidden_dim: 128
+  
+  detection:
+    learning_rate: 0.0003
+    hidden_dim: 128
+    use_ollama: false
+    confidence_threshold: 0.7
+  
+  response:
+    learning_rate: 0.0003
+    hidden_dim: 128
+    temperature: 1.0
+  
+  policy_adaptation:
+    learning_rate: 0.0001
+    hidden_dim: 128
+    enabled: false
+
+training:
+  num_episodes: 500
+  batch_size: 32
+  update_frequency: 20
+  checkpoint_frequency: 100
+
+evaluation:
+  eval_episodes: 50
+  eval_frequency: 100

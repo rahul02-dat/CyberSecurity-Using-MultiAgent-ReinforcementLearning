@@ -1,3 +1,10 @@
 .pytest_cache/
 env/
 .DS_Store
+output/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+performance/history/
+performance/matrices/

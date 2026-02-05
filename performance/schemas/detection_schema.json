@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "agent_type": "detection",
+  "metrics": {
+    "accuracy": {
+      "type": "float",
+      "description": "Classification accuracy",
+      "range": [0, 1]
+    },
+    "precision": {
+      "type": "float",
+      "description": "Precision for attack detection",
+      "range": [0, 1]
+    },
+    "recall": {
+      "type": "float",
+      "description": "Recall for attack detection",
+      "range": [0, 1]
+    },
+    "f1_score": {
+      "type": "float",
+      "description": "F1 score for attack detection",
+      "range": [0, 1]
+    },
+    "avg_confidence": {
+      "type": "float",
+      "description": "Average confidence of predictions",
+      "range": [0, 1]
+    },
+    "avg_reward": {
+      "type": "float",
+      "description": "Average reward per episode",
+      "range": [-10, 10]
+    }
+  }
+}

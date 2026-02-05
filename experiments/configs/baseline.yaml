@@ -1,0 +1,39 @@
+experiment:
+  name: "baseline"
+  description: "Baseline training configuration"
+  seed: 42
+
+environment:
+  feature_dim: 50
+  max_steps: 1000
+
+agents:
+  monitoring:
+    learning_rate: 0.0003
+    num_features_to_select: 20
+    hidden_dim: 256
+  
+  detection:
+    learning_rate: 0.0003
+    hidden_dim: 256
+    use_ollama: false
+    confidence_threshold: 0.7
+  
+  response:
+    learning_rate: 0.0003
+    hidden_dim: 256
+    temperature: 1.0
+  
+  policy_adaptation:
+    learning_rate: 0.0001
+    hidden_dim: 256
+
+training:
+  num_episodes: 1000
+  batch_size: 64
+  update_frequency: 10
+  checkpoint_frequency: 100
+
+evaluation:
+  eval_episodes: 50
+  eval_frequency: 100
