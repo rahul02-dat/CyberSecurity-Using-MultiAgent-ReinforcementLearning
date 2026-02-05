@@ -1,4 +1,11 @@
 from typing import Dict, Any
+import sys
+import os
+
+# Add project root to path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+import numpy as np
 from environment.network_env import NetworkEnvironment
 from utils.logging import Logger
 
